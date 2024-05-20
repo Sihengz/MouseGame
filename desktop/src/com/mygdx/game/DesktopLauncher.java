@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setWindowedMode(960, 540);
 		config.useVsync(true);
-		config.setTitle("My GDX Game");
+		config.setTitle("Siheng's Amazing Gaming Experience");
 		new Lwjgl3Application(new MyGdxGame(), config);
 	}
 }
