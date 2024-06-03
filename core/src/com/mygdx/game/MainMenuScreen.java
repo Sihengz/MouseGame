@@ -20,6 +20,7 @@ import com.mygdx.game.Mouse;
 public class MainMenuScreen implements Screen {
 
     final Mouse game;
+    private Texture natureImg;
     private Stage stage;
     private Table table;
 
@@ -29,6 +30,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 960, 540);
+        natureImg = new Texture(Gdx.files.internal("Images/nature.png"));
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -40,9 +42,33 @@ public class MainMenuScreen implements Screen {
                 dispose();
             }
         });
+
+        TextButton setting = new TextButton("SETTING", skin);
+        setting.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingScreen(game));
+                dispose();
+            }
+        });
+
+        TextButton quit = new TextButton("QUIT", skin);
+        quit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game));
+                game.dispose();
+            }
+        });
+
         table = new Table();
         table.setFillParent(true);
-        table.add(start);
+        // table.setDebug(true);
+        table.add(start).size(100, 50).pad(0, 250, 0, 0);
+        table.row();
+        table.add(setting).size(100, 50).pad(0, 250, 0, 0);
+        table.row();
+        table.add(quit).size(100, 50).pad(0, 250, 0, 0);
         stage.addActor(table);
 
     }
@@ -54,23 +80,16 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-//        ScreenUtils.clear(0, 0, 0.2f, 1);
-//
-//        camera.update();
-//        game.batch.setProjectionMatrix(camera.combined);
-//
-//        game.batch.begin();
-//        game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
-//        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-//        game.batch.end();
-//
-//        if (Gdx.input.isTouched()) {
-//            game.setScreen(new GameScreen(game));
-//            dispose();
-//        }
+        ScreenUtils.clear(0, 0, 0.2f, 1);
+
+        camera.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
+        game.batch.draw(natureImg, 960 / 2 - 256 / 2 - 100, 540 / 2 - 256 / 2);
+        game.batch.end();
     }
 
     @Override
@@ -98,7 +117,5 @@ public class MainMenuScreen implements Screen {
 
     }
 
-
-    //...Rest of class omitted for succinctness.
 
 }

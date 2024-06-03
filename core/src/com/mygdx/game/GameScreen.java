@@ -35,8 +35,8 @@ public class GameScreen implements Screen {
 
 		// Images
 		batch = new SpriteBatch();
-		mouseImg = new Texture(Gdx.files.internal("mouse.png"));
-		fruitImg = new Texture(Gdx.files.internal("fruit.png"));
+		mouseImg = new Texture(Gdx.files.internal("Images/mouse.png"));
+		fruitImg = new Texture(Gdx.files.internal("Images/fruit.png"));
 		fruits = new Array<Rectangle>();
 		spawnFruit();
 
@@ -47,11 +47,11 @@ public class GameScreen implements Screen {
 		mouse.height = 256;
 
 		// Sound
-		bgm = Gdx.audio.newMusic(Gdx.files.internal("Memories_of_Spring.mp3"));
+		bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/Memories_of_Spring.mp3"));
 		bgm.setLooping(true);
 		bgm.play();
 
-		dingSound = Gdx.audio.newSound(Gdx.files.internal("ding.mp3"));
+		dingSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/ding.mp3"));
 
 
 	}
