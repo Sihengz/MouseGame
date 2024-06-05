@@ -69,6 +69,8 @@ public class MainMenuScreen implements Screen {
         table.add(setting).size(100, 50).pad(0, 250, 0, 0);
         table.row();
         table.add(quit).size(100, 50).pad(0, 250, 0, 0);
+        table.row();
+
         stage.addActor(table);
 
     }

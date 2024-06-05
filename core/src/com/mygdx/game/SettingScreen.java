@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -26,6 +28,7 @@ public class SettingScreen implements Screen {
     public SpriteBatch batch;
     public Music bgm;
     public Stage stage;
+
 
     public SettingScreen(final Game game) {
         // wack
@@ -43,24 +46,27 @@ public class SettingScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        TextArea volume = new TextArea("VOLUME", skin);
         Slider slider = new Slider(0, 100, 1, false, skin);
-        stage.addActor(slider);
         slider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (slider.getSnapToValues() != null) {
-                    // FIX
-                    System.out.println(slider.getSnapToValues()[slider.getSnapToValues().length - 1]);
-                    bgm.setVolume(slider.getSnapToValues()[slider.getSnapToValues().length - 1]);
-                }
+                bgm.setVolume(slider.getValue() / 100.0f);
             }
         });
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.add(volume);
+        table.add(slider);
+        stage.addActor(table);
+
 
     }
 
     @Override
     public void render (float delta) {
-        ScreenUtils.clear(1, 1, 1, 1);
+        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 0.2f);
         camera.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
