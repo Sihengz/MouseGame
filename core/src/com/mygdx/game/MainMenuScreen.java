@@ -52,11 +52,11 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        TextButton quit = new TextButton("QUIT", skin);
-        quit.addListener(new ChangeListener() {
+        TextButton screen2 = new TextButton("thingy", skin);
+        screen2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen2(game));
                 game.dispose();
             }
         });
@@ -68,7 +68,7 @@ public class MainMenuScreen implements Screen {
         table.row();
         table.add(setting).size(100, 50).pad(0, 250, 0, 0);
         table.row();
-        table.add(quit).size(100, 50).pad(0, 250, 0, 0);
+        table.add(screen2).size(100, 50).pad(0, 250, 0, 0);
         table.row();
 
         stage.addActor(table);
