@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.util.Iterator;
 
 public class GameScreen implements Screen {
+	private final Mouse game;
 	private Texture mouseImg;
 	private Texture fruitImg;
 	private Array<Rectangle> fruits;
@@ -24,10 +26,13 @@ public class GameScreen implements Screen {
 	private OrthographicCamera camera;
 	private Rectangle mouse;
 	public SpriteBatch batch;
+	public BitmapFont font = new BitmapFont();
 
+	private int score = 0;
 	
 
-	public GameScreen(final Game game) {
+	public GameScreen(final Mouse game) {
+		this.game = game;
 		// wack
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 960, 540);
@@ -61,14 +66,21 @@ public class GameScreen implements Screen {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		font.draw(batch, "SCORE: " + score, 100, 150);
 		batch.draw(mouseImg, mouse.x, mouse.y);
 		for(Rectangle fruit: fruits) {
 			batch.draw(fruitImg, fruit.x, fruit.y);
 		}
+
+		if (score > 20) {
+			game.setScreen(new End(game));
+		}
+
 		batch.end();
 		for (Iterator<Rectangle> iter = fruits.iterator(); iter.hasNext(); ) {
 			Rectangle raindrop = iter.next();
 			if(raindrop.overlaps(mouse)) {
+				score++;
 				dingSound.play();
 				iter.remove();
 			}

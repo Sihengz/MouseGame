@@ -25,9 +25,9 @@ import java.util.Iterator;
 
 public class SettingScreen implements Screen {
     private OrthographicCamera camera;
-    public SpriteBatch batch;
-    public Music bgm;
-    public Stage stage;
+    private SpriteBatch batch;
+    private Music bgm;
+    private Stage stage;
 
 
     public SettingScreen(final Game game) {
