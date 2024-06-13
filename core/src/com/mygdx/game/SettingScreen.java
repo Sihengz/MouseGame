@@ -11,10 +11,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -30,7 +27,7 @@ public class SettingScreen implements Screen {
     private Stage stage;
 
 
-    public SettingScreen(final Game game) {
+    public SettingScreen(final Mouse game) {
         // wack
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 960, 540);
@@ -55,10 +52,21 @@ public class SettingScreen implements Screen {
             }
         });
 
+        TextButton menu = new TextButton("MenU", skin);
+        menu.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
+
         Table table = new Table();
         table.setFillParent(true);
         table.add(volume);
         table.add(slider);
+        table.row();
+        table.add(menu);
         stage.addActor(table);
 
 
